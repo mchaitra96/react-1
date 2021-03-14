@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Island 2D matrix</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<div id="value"></div>
+
+	<script>
+       
+
+
+const numIslands = (matrix) => {
+  // check for empty matrix
+  if (!matrix || matrix.length === 0 || matrix[0].length === 0) {
+    return 0;
+  }
+
+
+  let resIslands = 0;
+
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+ 
+      if (matrix[i][j] === "1") {
+        resIslands += 1;
+        dfs(i, j, matrix);
+      }
+    }
+   
+  }
+  return resIslands;
+};
+
+const dfs = (i, j, matrix) => {
+
+  console.log(`checking at ${i}, ${j}`);
+
+  if (
+    i < 0 ||
+    i >= matrix.length ||
+    j < 0 ||
+    j >= matrix[0].length ||
+    matrix[i][j] === "0"
+  ) {
+    console.log("No island here!");
+    return 0;
+  }
+
+
+  matrix[i][j] = "0";
+  // check for  above
+  dfs(i - 1, j, matrix);
+  // check for  below
+  dfs(i + 1, j, matrix);
+  // check for left
+  dfs(i, j - 1, matrix);
+  // check for right
+  dfs(i, j + 1, matrix);
+
+  return;
+};
+
+
+const matrix = [
+  ["1", "1", "0", "0", "0"],
+  ["0", "1", "0", "0", "1"],
+  ["1", "0", "0", "1", "1"],
+  ["0", "0", "0", "0", "0"],
+  ["1", "0", "1", "1", "1"],
+];
+const totalIslands = numIslands(matrix);
+console.log(
+  `There ${totalIslands > 1 ? "are" : "is"} ${totalIslands} island${
+    totalIslands > 1 ? "s" : ""
+  }`
+);
+
+document.getElementById("value").innerHTML = `There ${
+  totalIslands > 1 ? "are" : "is"
+} ${totalIslands} island${totalIslands > 1 ? "s" : ""}`;
+
+    </script>
+</body>
+
+</html>
